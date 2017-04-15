@@ -1,0 +1,487 @@
+object Form1: TForm1
+  Left = 184
+  Height = 700
+  Top = 3
+  Width = 800
+  Caption = 'Исследование двумерного преобразования Фурье'
+  ClientHeight = 677
+  ClientWidth = 800
+  Menu = MainMenu
+  OnClose = FormClose
+  OnCreate = FormCreate
+  LCLVersion = '1.6.0.4'
+  object PanelStatus: TPanel
+    Left = 0
+    Height = 48
+    Top = 629
+    Width = 800
+    Align = alBottom
+    Alignment = taLeftJustify
+    BevelOuter = bvLowered
+    ClientHeight = 48
+    ClientWidth = 800
+    TabOrder = 0
+    object LabelMouseCoords: TLabel
+      Left = 200
+      Height = 17
+      Top = 16
+      Width = 41
+      Caption = 'Мышь:'
+      ParentColor = False
+    end
+    object LabelPBoxMainSize: TLabel
+      Left = 200
+      Height = 17
+      Top = 0
+      Width = 54
+      Caption = 'Полотно:'
+      ParentColor = False
+    end
+    object LabelFileName: TLabel
+      Left = 9
+      Height = 17
+      Top = 31
+      Width = 35
+      Caption = 'Файл:'
+      ParentColor = False
+      OnClick = MenuItemFileOpenClick
+    end
+    object LabelCollection: TLabel
+      Left = 8
+      Height = 17
+      Top = 0
+      Width = 67
+      Caption = 'Коллекция:'
+      ParentColor = False
+    end
+    object LabelLayerCode: TLabel
+      Left = 8
+      Height = 17
+      Top = 16
+      Width = 33
+      Caption = 'Слой:'
+      ParentColor = False
+    end
+  end
+  object PanelColor: TPanel
+    Left = 0
+    Height = 561
+    Top = 68
+    Width = 144
+    Align = alLeft
+    ClientHeight = 561
+    ClientWidth = 144
+    TabOrder = 1
+    object PBoxMagnify: TPaintBox
+      Left = 8
+      Height = 128
+      Top = 248
+      Width = 128
+    end
+    object SG_filter: TStringGrid
+      Left = 8
+      Height = 104
+      Top = 28
+      Width = 128
+      ColCount = 3
+      DefaultColWidth = 40
+      DefaultRowHeight = 32
+      FixedCols = 0
+      FixedRows = 0
+      Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goEditing, goSmoothScroll]
+      RowCount = 3
+      TabOrder = 0
+    end
+    object LabelFilter: TLabel
+      Left = 8
+      Height = 17
+      Top = 8
+      Width = 108
+      Caption = 'Матрица фильтра'
+      ParentColor = False
+    end
+    object ButtonFilter: TButton
+      Left = 8
+      Height = 25
+      Top = 196
+      Width = 128
+      Caption = 'Отфильтровать'
+      OnClick = ButtonFilterClick
+      TabOrder = 1
+    end
+    object LabelFIlterZnam: TLabel
+      Left = 8
+      Height = 17
+      Top = 140
+      Width = 134
+      Caption = 'Знаменатель фильтра'
+      ParentColor = False
+    end
+    object Edit_FilterZnam: TEdit
+      Left = 8
+      Height = 27
+      Top = 164
+      Width = 128
+      TabOrder = 2
+      Text = '4'
+    end
+    object LabelMagnify: TLabel
+      Left = 9
+      Height = 17
+      Top = 232
+      Width = 29
+      Caption = 'Лупа'
+      ParentColor = False
+    end
+  end
+  object ImageView: TPaintBox
+    Left = 144
+    Height = 561
+    Top = 68
+    Width = 656
+    Align = alClient
+    OnMouseDown = ImageViewMouseDown
+    OnMouseMove = ImageViewMouseMove
+    OnMouseUp = ImageViewMouseUp
+    OnPaint = ImageViewPaint
+  end
+  object PanelCollection: TPanel
+    Left = 0
+    Height = 68
+    Top = 0
+    Width = 800
+    Align = alTop
+    ClientHeight = 68
+    ClientWidth = 800
+    TabOrder = 2
+    object PBoxCollection: TPaintBox
+      Left = 1
+      Height = 52
+      Top = 1
+      Width = 798
+      Align = alClient
+      OnMouseMove = PBoxCollectionMouseMove
+      OnMouseUp = PBoxCollectionMouseUp
+      OnPaint = PBoxCollectionPaint
+    end
+    object ScrollBarCollection: TScrollBar
+      Left = 1
+      Height = 14
+      Top = 53
+      Width = 798
+      Align = alBottom
+      PageSize = 0
+      TabOrder = 0
+      OnChange = ScrollBarCollectionChange
+    end
+  end
+  object MainMenu: TMainMenu
+    left = 336
+    top = 16
+    object MenuItemFile: TMenuItem
+      Caption = 'Файл'
+      object MenuItemFileOpen: TMenuItem
+        Caption = 'Загрузить'
+        OnClick = MenuItemFileOpenClick
+      end
+      object MenuItemFileSave: TMenuItem
+        Caption = 'Сохранить'
+        OnClick = MenuItemFileSaveClick
+      end
+      object MenuItemLoadCollection: TMenuItem
+        Caption = 'Загрузить коллекцию'
+        OnClick = MenuItemLoadCollectionClick
+      end
+      object MenuItemSaveCollection: TMenuItem
+        Caption = 'Сохранить коллекцию'
+        OnClick = MenuItemSaveCollectionClick
+      end
+      object MenuItemExit: TMenuItem
+        Caption = 'Выход'
+        OnClick = MenuItemExitClick
+      end
+    end
+    object MenuItemEdit: TMenuItem
+      Caption = 'Правка'
+      object MenuItemFourieToLayer0: TMenuItem
+        Caption = 'Копировать коэффициенты из текущего слоя в слой 0'
+        OnClick = MenuItemFourieToLayer0Click
+      end
+      object MenuItemFourieToLayer1: TMenuItem
+        Caption = 'Копировать коэффициенты из текущего слоя в слой 1'
+        OnClick = MenuItemFourieToLayer1Click
+      end
+      object MenuItemFourieToLayer2: TMenuItem
+        Caption = 'Копировать коэффициенты из текущего слоя в слой 2'
+        OnClick = MenuItemFourieToLayer2Click
+      end
+      object MenuItemFourieToLayer3: TMenuItem
+        Caption = 'Копировать коэффициенты из текущего слоя в слой 3'
+        OnClick = MenuItemFourieToLayer3Click
+      end
+      object MenuItemFourieToLayer4: TMenuItem
+        Caption = 'Копировать коэффициенты из текущего слоя в слой 4'
+        OnClick = MenuItemFourieToLayer4Click
+      end
+      object MenuItemImgToLayer0: TMenuItem
+        Caption = 'Копировать изображение из текущего слоя в слой 0'
+        OnClick = MenuItemImgToLayer0Click
+      end
+      object MenuItemImgToLayer1: TMenuItem
+        Caption = 'Копировать изображение из текущего слоя в слой 1'
+        OnClick = MenuItemImgToLayer1Click
+      end
+      object MenuItemImgToLayer2: TMenuItem
+        Caption = 'Копировать изображение из текущего слоя в слой 2'
+        OnClick = MenuItemImgToLayer2Click
+      end
+      object MenuItemImgToLayer3: TMenuItem
+        Caption = 'Копировать изображение из текущего слоя в слой 3'
+        OnClick = MenuItemImgToLayer3Click
+      end
+      object MenuItemImgToLayer4: TMenuItem
+        Caption = 'Копировать изображение из текущего слоя в слой 4'
+        OnClick = MenuItemImgToLayer4Click
+      end
+      object MenuItemClearLayer: TMenuItem
+        Caption = 'Очистить изображение текущего слоя'
+        OnClick = MenuItemClearLayerClick
+      end
+      object MenuItemFourieClear: TMenuItem
+        Caption = 'Очистить коэффициенты текущего слоя'
+        OnClick = MenuItemFourieClearClick
+      end
+      object MenuItemClearLayers: TMenuItem
+        Caption = 'Полная очистка всех слоев'
+        OnClick = MenuItemClearLayersClick
+      end
+      object MenuItemClearCollection: TMenuItem
+        Caption = 'Очистить коллекцию'
+        OnClick = MenuItemClearCollectionClick
+      end
+      object MenuItemEditMagnifity: TMenuItem
+        Caption = 'Лупа'
+        object MenuItemMagnify1: TMenuItem
+          Tag = 1
+          Caption = 'оригинал'
+          OnClick = MenuItemMagnify1Click
+        end
+        object MenuItemMagnify2: TMenuItem
+          Tag = 2
+          Caption = 'x2'
+          OnClick = MenuItemMagnify1Click
+        end
+        object MenuItemMagnify3: TMenuItem
+          Tag = 3
+          Caption = 'x3'
+          OnClick = MenuItemMagnify1Click
+        end
+        object MenuItemMagnify5: TMenuItem
+          Tag = 5
+          Caption = 'x5'
+          OnClick = MenuItemMagnify1Click
+        end
+        object MenuItemMagnify10: TMenuItem
+          Tag = 10
+          Caption = 'x10'
+          OnClick = MenuItemMagnify1Click
+        end
+        object MenuItemMagnify20: TMenuItem
+          Tag = 20
+          Caption = 'x20'
+          OnClick = MenuItemMagnify1Click
+        end
+      end
+    end
+    object MenuItemLayers: TMenuItem
+      Caption = 'Слой'
+      object MenuItemLayer0: TMenuItem
+        Caption = 'Слой 0'
+        OnClick = MenuItemLayer0Click
+      end
+      object MenuItemLayer1: TMenuItem
+        Caption = 'Слой 1'
+        OnClick = MenuItemLayer1Click
+      end
+      object MenuItemLayer2: TMenuItem
+        Caption = 'Слой 2'
+        OnClick = MenuItemLayer2Click
+      end
+      object MenuItemLayer3: TMenuItem
+        Caption = 'Слой 3'
+        OnClick = MenuItemLayer3Click
+      end
+      object MenuItemLayer4: TMenuItem
+        Caption = 'Слой 4'
+        OnClick = MenuItemLayer4Click
+      end
+      object MenuItemLayerToCollection: TMenuItem
+        Caption = 'Слой в коллекцию'
+        OnClick = MenuItemLayerToCollectionClick
+      end
+      object MenuItemSummaryToCollection: TMenuItem
+        Caption = 'Сводное в коллекцию'
+        OnClick = MenuItemSummaryToCollectionClick
+      end
+      object MenuItemLayerTransparency0: TMenuItem
+        Caption = 'Прозрачность 0%'
+        OnClick = MenuItemLayerTransparency0Click
+      end
+      object MenuItemLayerTransparency25: TMenuItem
+        Caption = 'Прозрачность 25%'
+        OnClick = MenuItemLayerTransparency25Click
+      end
+      object MenuItemLayerTransparency50: TMenuItem
+        Caption = 'Прозрачность 50%'
+        OnClick = MenuItemLayerTransparency50Click
+      end
+      object MenuItemLayerTransparency75: TMenuItem
+        Caption = 'Прозрачность 75%'
+        OnClick = MenuItemLayerTransparency75Click
+      end
+      object MenuItemLayerTransparency100: TMenuItem
+        Caption = 'Прозрачность 100%'
+        OnClick = MenuItemLayerTransparency100Click
+      end
+    end
+    object MenuItemAnalysis: TMenuItem
+      Caption = 'Спектральный анализ'
+      object MenuItemLayerFourieAnalysis: TMenuItem
+        Caption = 'Фурье-анализ текущего слоя'
+        OnClick = MenuItemLayerFourieAnalysisClick
+      end
+      object MenuItemFourieToCollection: TMenuItem
+        Caption = 'Визуализировать коэффициенты текущего слоя'
+        OnClick = MenuItemFourieToCollectionClick
+      end
+      object MenuItemFourieSynt: TMenuItem
+        Caption = 'Фурье-синтез по коэффициентам текущего слоя'
+        OnClick = MenuItemFourieSyntClick
+      end
+      object MenuItemLowPassFourie: TMenuItem
+        Caption = 'Низкочастотный фильтр слоя'
+        OnClick = MenuItemLowPassFourieClick
+      end
+      object MenuItemFourieLowPassInv: TMenuItem
+        Caption = 'Инверсный низкочастотный фильтр'
+        OnClick = MenuItemFourieLowPassInvClick
+      end
+      object MenuItemHighPassFourie: TMenuItem
+        Caption = 'Высокочастотный фильтр слоя'
+        OnClick = MenuItemHighPassFourieClick
+      end
+      object MenuItemFourieHighPassInv: TMenuItem
+        Caption = 'Инверсный высокочастотный фильтр'
+        OnClick = MenuItemFourieHighPassInvClick
+      end
+      object MenuItemFourieMaskLayer0: TMenuItem
+        Caption = 'Маска фильтра в изображении слоя 0'
+        OnClick = MenuItemFourieMaskLayer0Click
+      end
+      object MenuItemFourieMaskLayer1: TMenuItem
+        Caption = 'Маска фильтра в изображении слоя 1'
+        OnClick = MenuItemFourieMaskLayer1Click
+      end
+      object MenuItemFourieMaskLayer2: TMenuItem
+        Caption = 'Маска фильтра в изображении слоя 2'
+        OnClick = MenuItemFourieMaskLayer2Click
+      end
+      object MenuItemFourieMaskLayer3: TMenuItem
+        Caption = 'Маска фильтра в изображении слоя 3'
+        OnClick = MenuItemFourieMaskLayer3Click
+      end
+      object MenuItemFourieMaskLayer4: TMenuItem
+        Caption = 'Маска фильтра в изображении слоя 4'
+        OnClick = MenuItemFourieMaskLayer4Click
+      end
+      object MenuItemFourieNoise: TMenuItem
+        Caption = 'Внести шум в коэффициенты слоя'
+        OnClick = MenuItemFourieNoiseClick
+      end
+      object MenuItemFourieNormalize: TMenuItem
+        Caption = 'Нормализовать коэффициенты текущего слоя'
+        OnClick = MenuItemFourieNormalizeClick
+      end
+      object MenuItemFourieIncrease: TMenuItem
+        Caption = 'Увеличить коэффициенты в k раз'
+        OnClick = MenuItemFourieIncreaseClick
+      end
+      object MenuItemFourieDecrease: TMenuItem
+        Caption = 'Уменьшить коэффициенты в k раз'
+        OnClick = MenuItemFourieDecreaseClick
+      end
+      object MenuItemFourieBiasInc: TMenuItem
+        Caption = 'Увеличить коэффициенты на B'
+        OnClick = MenuItemFourieBiasIncClick
+      end
+      object MenuItemFourieBiasDec: TMenuItem
+        Caption = 'Уменьшить коэффициенты на B'
+        OnClick = MenuItemFourieBiasDecClick
+      end
+      object MenuItemFourieMergeArith: TMenuItem
+        Caption = 'Среднее арифметическое коэффициентов слоев 1 и 2 на слой 0'
+        OnClick = MenuItemFourieMergeArithClick
+      end
+      object MenuItemFourieMergeSum: TMenuItem
+        Caption = 'Сумма коэффициентов слоев 1 и 2 на слой 0'
+        OnClick = MenuItemFourieMergeSumClick
+      end
+      object MenuItemFourieMergeSub: TMenuItem
+        Caption = 'Разность коэффициентов слоев 1 и 2 на слой 0'
+        OnClick = MenuItemFourieMergeSubClick
+      end
+      object MenuItemFourieMergeMul: TMenuItem
+        Caption = 'Произведение коэффициентов слоев 1 и 2 на слой 0'
+        OnClick = MenuItemFourieMergeMulClick
+      end
+      object MenuItemFourieMergeDiv: TMenuItem
+        Caption = 'Частное коэффициентов слоев 1 и 2 на слой 0'
+        OnClick = MenuItemFourieMergeDivClick
+      end
+      object MenuItemFourieLayerSqrt: TMenuItem
+        Caption = 'Корень квадратный  из коэффициентов слоя 0 на слои 1 и 2'
+        OnClick = MenuItemFourieLayerSqrtClick
+      end
+      object MenuItemFourieCompose: TMenuItem
+        Caption = 'Слияние-восстановление слоев 1,2,3,4 в слой 0'
+        OnClick = MenuItemFourieComposeClick
+      end
+      object MenuItemSummaryFourieAnalysis: TMenuItem
+        Caption = 'Фурье-анализ сводного изображения'
+        OnClick = MenuItemSummaryFourieAnalysisClick
+      end
+    end
+    object MenuItemHelp: TMenuItem
+      Caption = 'Справка'
+      object MenuItemHelpUser: TMenuItem
+        Caption = 'Руководство пользователя'
+        OnClick = MenuItemHelpUserClick
+      end
+      object MenuItemHelpProgrammer: TMenuItem
+        Caption = 'Руководство программиста'
+        OnClick = MenuItemHelpProgrammerClick
+      end
+      object MenuItemHelpTeacher: TMenuItem
+        Caption = 'Методические рекомендации'
+        OnClick = MenuItemHelpTeacherClick
+      end
+      object MenuItemHelpAbout: TMenuItem
+        Caption = 'О программе'
+        OnClick = MenuItemHelpAboutClick
+      end
+    end
+  end
+  object OpenPictureDialog: TOpenPictureDialog
+    Options = [ofAllowMultiSelect, ofEnableSizing, ofViewDetail]
+    left = 376
+    top = 16
+  end
+  object SavePictureDialog: TSavePictureDialog
+    left = 416
+    top = 16
+  end
+  object SelectDirectoryDialog: TSelectDirectoryDialog
+    left = 296
+    top = 16
+  end
+end
